@@ -14,6 +14,6 @@ const socketManager = require('./socketManager');
 io.on('connection', socketManager);
 
 // -=-----
-app.listen(Port, ()=>{
+app.listen(PORT, ()=>{
 	console.log('connected to port', + PORT);
 }); 
