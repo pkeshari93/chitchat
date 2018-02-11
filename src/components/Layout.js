@@ -2,7 +2,8 @@
 // making a react component
 import React, {Component} from 'react';
 import io from 'socket.io-client';
-import {USER_CONNECTED} from '../Events.js';
+import {USER_CONNECTED, LOGOUT} from '../Events.js';
+import LoginForm from './LoginForm';
 
 // connected to the URL of the server
 const socketUrl = "http://10.0.0.195:3231";
@@ -27,15 +28,16 @@ export default class Layout extends Component{
 	/*
 		connect to and initializes the socket
 	*/
-	initSocket = ()=>{
-		const socket = io(socketUrl);
+	
+	 
+	initSocket = ( ) => {
+		const socket = io(socketUrl)
 		socket.on('connect', ()=>{
-			console.log('connected');
-		});
+			console.log('connected')
+		})
 		// setting the state of the socket
 		this.setState({socket});
 	}
-
 	/*
 		Sets the user property in state
 		@param user{id: number, name: string}
@@ -54,14 +56,15 @@ export default class Layout extends Component{
 		// emit to the server that the suer logged out
 		const {socket} = this.state
 		socket.emit(LOGOUT)
-		this.setState({user}:null) 
+		this.setState({ user:null }) 
 	}
 
 	render(){
-		const{title} = this.props;
-		return(
+		const{ title } = this.props;
+		const{ socket } = this.state;
+		return( 
 			<div className="container">
-				{title}
+				<LoginForm socket = {socket} setUser = {this.setUser} />
 			</div>
 		);
 	}
